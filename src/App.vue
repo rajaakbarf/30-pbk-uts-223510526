@@ -1,64 +1,32 @@
 <template>
-  <div>
-    <!-- Header dengan menu "Post" dan "Todos" -->
-    <header>
-      <nav>
-        <ul>
-          <li @click="toggleView('todos')">Todos</li>
-          <li @click="toggleView('posts')">Post</li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- Menampilkan komponen berdasarkan pilihan -->
-    <div v-if="view === 'todos'">
-      <Todos :initial-activities="initialActivities">
-        <template #header>
-          <h1>Daftar Kegiatan Kustom</h1>
-        </template>
-      </Todos>
-    </div>
-
-    <div v-else-if="view === 'posts'">
-      <Post :custom-users="users">
-        <template #header>
-          <h1>Postingan Pengguna Kustom</h1>
-        </template>
-      </Post>
-    </div>
-  </div>
+    <header class="navbar">
+    <nav>
+      <ul class="nav-links">
+        <li><RouterLink to="/todos" class="nav-link">Todos</RouterLink></li>
+        <li><RouterLink to="/post" class="nav-link">Post</RouterLink></li>
+        <li><RouterLink to="/albums" class="nav-link">Albums</RouterLink></li>
+      </ul>
+    </nav>
+  </header>
+  <RouterView />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import Todos from './components/todos.vue';
-import Post from './components/post.vue';
-
-const view = ref('todos');
-const users = ref([]);
-const initialActivities = ref([
-  { id: 1, name: 'Makan siang', completed: false },
-  { id: 2, name: 'Belajar VueJS', completed: false }
-]);
-
-function toggleView(selectedView) {
-  view.value = selectedView;
-}
-
-async function fetchUsers() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/users');
-  users.value = await response.json();
-}
-
-onMounted(fetchUsers);
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
 /* CSS untuk header */
 header {
-  background-color: #b1d100; 
+  font-family: 'Poppins';
+  background-color: #2a2a29; 
   color: white;
-  padding: 10px;
+  padding: 20px;
+  text-align: center;
+  font-weight: 600;
+  
 }
 
 nav ul {
@@ -75,6 +43,10 @@ nav ul li {
 
 /* Efek hover */
 nav ul li:hover {
-  background-color: #8aa000; 
+  background-color: #7d7d7c; 
+}
+
+.nav-link {
+  color: aliceblue;
 }
 </style>
