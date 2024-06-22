@@ -1,23 +1,25 @@
 <template>
-    <div class="photo-detail">
-      <h2>Photos</h2>
-  
-      <!-- Daftar thumbnail foto -->
-      <div class="album-detail">
+  <div class="photo-detail">
+    <h2>Photos</h2>
+
+    <!-- Daftar thumbnail foto -->
+    <div class="album-detail">
+      <div class="photo-card-container">
         <div v-for="photo in photos" :key="photo.id" class="photo-card" @click="showFullSizePhoto(photo)">
           <img :src="photo.thumbnailUrl" :alt="photo.title" class="photo-thumbnail">
         </div>
       </div>
-  
-      <!-- Overlay untuk foto ukuran penuh -->
-      <div v-if="showFullPhoto" class="full-photo-overlay" @click="showFullSizePhoto(null)">
-        <div class="full-photo-container">
-          <img :src="fullPhotoUrl" :alt="selectedPhoto.title" class="full-size-photo">
-        </div>
+    </div>
+
+    <!-- Overlay untuk foto ukuran penuh -->
+    <div v-if="showFullPhoto" class="full-photo-overlay" @click="showFullSizePhoto(null)">
+      <div class="full-photo-container">
+        <img :src="fullPhotoUrl" :alt="selectedPhoto.title" class="full-size-photo">
       </div>
     </div>
-  </template>
-  
+  </div>
+</template>
+
   <script setup>
   import { usePostStore } from '../store/postStore';
   import { onMounted, ref } from 'vue';
@@ -53,9 +55,7 @@
     }
   };
   </script>
-  
   <style scoped>
-   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
   .photo-detail {
     padding: 20px;
   }
@@ -75,21 +75,33 @@
     gap: 20px;
   }
   
+  .photo-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1000px; /* Adjust the max-width as needed */
+    margin: 0 auto; /* Center align the photos */
+  }
+  
   .photo-card {
-    width: 200px;
+    width: calc(20% - 20px); /* Adjust the width to show 5 photos per row */
     padding: 10px;
     cursor: pointer;
+    perspective: 1000px;
+    transition: transform 0.3s ease-in-out;
   }
   
   .photo-thumbnail {
     width: 100%;
     height: auto;
     border-radius: 5px;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease-in-out;
   }
   
   .photo-card:hover .photo-thumbnail {
-    transform: scale(1.1);
+    transform: scale(1.4);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   }
   
   /* Overlay untuk foto ukuran penuh */
@@ -119,3 +131,4 @@
     cursor: pointer;
   }
   </style>
+  
